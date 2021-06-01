@@ -3,9 +3,9 @@ const Joi = require('joi');
 module.exports = {
   register(req, res, next) {
     const schema = Joi.object({
-      email: Joi.string().email(),
+      email: Joi.string().regex(new RegExp('^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$')),
       password: Joi.string().regex(new RegExp('^[a-zA-Z0-9]{6,16}$')),
-      name: Joi.string().regex(new RegExp('^[а-яА-ЯёЁa-zA-Z ]{2,32}$')),
+      name: Joi.string().regex(new RegExp('^[а-яА-ЯёЁa-zA-Z]{2,32}$')),
     });
 
     const { error } = schema.validate(req.body);
