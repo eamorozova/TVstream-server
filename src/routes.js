@@ -1,6 +1,7 @@
 const AuthenticationController = require('./controllers/AuthenticationController');
+const ChannelsController = require('./controllers/ChannelsController');
 
-const AuthenticationPolicy = require('../src/policies/AuthenticatioPolicy');
+const AuthenticationPolicy = require('./policies/AuthenticationPolicy');
 
 module.exports = (app) => {
   app.post(
@@ -11,5 +12,13 @@ module.exports = (app) => {
   app.post(
     '/login',
     AuthenticationController.login,
+  );
+  app.get(
+    '/channels',
+    ChannelsController.index,
+  );
+  app.post(
+    '/channels',
+    ChannelsController.post,
   );
 };

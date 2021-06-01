@@ -18,7 +18,7 @@ module.exports = {
       });
     } catch (err) {
       return res.status(400).send({
-        error: 'This email account is already used.',
+        error: 'Этот адрес электронной почты уже используется на сайте',
       });
     }
   },
@@ -30,16 +30,15 @@ module.exports = {
       });
       if (!user) {
         return res.status(403).send({
-          error: 'Incorrect email',
+          error: 'Неправильный адрес электронной почты',
         });
       }
       const isPasswordValid = await user.comparePassword(password);
       if (!isPasswordValid) {
         return res.status(403).send({
-          error: 'Incorrect password',
+          error: 'Неправильный пароль',
         });
       }
-
       const userJson = user.toJSON();
       return res.send({
         user: userJson,
@@ -47,7 +46,7 @@ module.exports = {
       });
     } catch (err) {
       return res.status(500).send({
-        error: 'Error',
+        error: 'Ошибка',
       });
     }
   },
