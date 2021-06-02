@@ -13,16 +13,21 @@ module.exports = (app) => {
     '/login',
     AuthenticationController.login,
   );
+
   app.get(
     '/channels',
     ChannelsController.index,
+  );
+  app.get(
+    '/channels/:channelId',
+    ChannelsController.show,
   );
   app.post(
     '/channels',
     ChannelsController.post,
   );
-  app.get(
-    '/favorites',
-    ChannelsController.index,
+  app.put(
+    '/channels/:channelId',
+    ChannelsController.put,
   );
 };

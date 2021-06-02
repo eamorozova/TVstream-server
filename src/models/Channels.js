@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'Channel', {
       title: DataTypes.STRING,
       image: DataTypes.STRING,
+      description: DataTypes.TEXT,
       // programs: DataTypes.ARRAY,
     },
   );
