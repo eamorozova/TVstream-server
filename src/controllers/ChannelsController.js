@@ -25,7 +25,7 @@ module.exports = {
   },
   async show(req, res) {
     try {
-      const channel = await Channel.findById(req.params.channelId);
+      const channel = await Channel.findByPk(req.params.channelId);
       res.send(channel);
     } catch (err) {
       res.status(500).send({
