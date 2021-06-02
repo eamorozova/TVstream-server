@@ -1,3 +1,4 @@
+const faker = require('faker');
 const { Channel } = require('../models');
 
 module.exports = {
@@ -15,6 +16,7 @@ module.exports = {
   },
   async post(req, res) {
     try {
+      req.body.image = faker.image.lorempixel.business();
       const channel = await Channel.create(req.body);
       return res.send(channel);
     } catch (err) {

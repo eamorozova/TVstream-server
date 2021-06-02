@@ -21,4 +21,8 @@ module.exports = (app) => {
     '/channels',
     ChannelsController.post,
   );
+  app.get(
+    '/favorites',
+    ChannelsController.index,
+  );
 };
