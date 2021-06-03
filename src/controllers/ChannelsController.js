@@ -1,6 +1,21 @@
 const { Channel } = require('../models');
 
 module.exports = {
+  async delete(req, res) {
+    try {
+      await Channel.destroy({
+        where: {
+          id: req.params.channelId,
+        },
+        force: true,
+      });
+      res.send(req.body);
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+      });
+    }
+  },
   async index(req, res) {
     try {
       const channels = await Channel.findAll({

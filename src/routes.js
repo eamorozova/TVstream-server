@@ -14,6 +14,10 @@ module.exports = (app) => {
     AuthenticationController.login,
   );
 
+  app.delete(
+    '/channels/:channelId',
+    ChannelsController.delete,
+  );
   app.get(
     '/channels',
     ChannelsController.index,
