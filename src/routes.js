@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/AuthenticationController');
 const ChannelsController = require('./controllers/ChannelsController');
+const ProgramsController = require('./controllers/ProgramsController');
 
 const AuthenticationPolicy = require('./policies/AuthenticationPolicy');
 
@@ -33,5 +34,14 @@ module.exports = (app) => {
   app.put(
     '/channels/:channelId',
     ChannelsController.put,
+  );
+
+  app.post(
+    '/programs',
+    ProgramsController.post,
+  );
+  app.get(
+    '/programs',
+    ProgramsController.index,
   );
 };
