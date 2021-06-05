@@ -44,4 +44,19 @@ module.exports = (app) => {
     '/programs',
     ProgramsController.index,
   );
+  app.get(
+    '/favorites',
+    isAuthenticated,
+    FavoriteChannelController.index,
+  );
+  app.post(
+    '/favorites',
+    isAuthenticated,
+    FavoriteChannelController.post,
+  );
+  app.delete(
+    '/favorites/:favoriteId',
+    isAuthenticated,
+    FavoriteChannelController.remove,
+  );
 };
