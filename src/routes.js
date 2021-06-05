@@ -1,8 +1,11 @@
 const AuthenticationController = require('./controllers/AuthenticationController');
 const ChannelsController = require('./controllers/ChannelsController');
 const ProgramsController = require('./controllers/ProgramsController');
+const StreamsController = require('./controllers/StreamsController');
+const FavoriteChannelController = require('./controllers/FavoriteChannelController');
 
 const AuthenticationPolicy = require('./policies/AuthenticationPolicy');
+const isAuthenticated = require('./policies/isAuthenticated');
 
 module.exports = (app) => {
   app.post(
