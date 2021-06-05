@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 
 const bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
 
-/* eslint-disable */
+// eslint-disable-next-line consistent-return
 function hashPassword(user) {
   if (user.changed('password')) {
     return bcrypt
@@ -13,7 +13,6 @@ function hashPassword(user) {
       });
   }
 }
-/* eslint-enable */
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(

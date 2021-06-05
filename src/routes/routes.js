@@ -1,11 +1,11 @@
-const AuthenticationController = require('./controllers/AuthenticationController');
-const ChannelsController = require('./controllers/ChannelsController');
-const ProgramsController = require('./controllers/ProgramsController');
-const StreamsController = require('./controllers/StreamsController');
-const FavoriteChannelController = require('./controllers/FavoriteChannelController');
+const AuthenticationController = require('../controllers/AuthenticationController');
+const ChannelsController = require('../controllers/ChannelsController');
+const ProgramsController = require('../controllers/ProgramsController');
+const StreamsController = require('../controllers/StreamsController');
+const FavoriteChannelController = require('../controllers/FavoriteChannelController');
 
-const AuthenticationPolicy = require('./policies/AuthenticationPolicy');
-const isAuthenticated = require('./policies/isAuthenticated');
+const AuthenticationPolicy = require('../policies/AuthenticationPolicy');
+const isAuthenticated = require('../policies/isAuthenticated');
 
 module.exports = (app) => {
   app.post(
@@ -16,6 +16,21 @@ module.exports = (app) => {
   app.post(
     '/login',
     AuthenticationController.login,
+  );
+  app.delete(
+    '/user',
+    isAuthenticated,
+    AuthenticationController.delete,
+  );
+  app.put(
+    '/user',
+    isAuthenticated,
+    AuthenticationController.put,
+  );
+  app.get(
+    '/user',
+    isAuthenticated,
+    AuthenticationController.show,
   );
 
   app.delete(
@@ -47,6 +62,19 @@ module.exports = (app) => {
     '/programs',
     ProgramsController.index,
   );
+  app.get(
+    '/programs/find',
+    ProgramsController.find,
+  );
+  app.post(
+    '/streams',
+    StreamsController.post,
+  );
+  app.get(
+    '/streams',
+    StreamsController.index,
+  );
+
   app.get(
     '/favorites',
     isAuthenticated,

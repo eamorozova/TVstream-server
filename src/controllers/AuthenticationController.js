@@ -50,4 +50,44 @@ module.exports = {
       });
     }
   },
+  // eslint-disable-next-line consistent-return
+  async delete(req, res) {
+    try {
+      const userId = req.user.id;
+      await User.destroy({
+        where: { id: userId },
+        force: true,
+      });
+      res.send(req.body);
+    } catch (err) {
+      return res.status(400).send({
+        error: 'Ошибка',
+      });
+    }
+  },
+  async show(req, res) {
+    try {
+      const userId = req.user.id;
+      const user = await User.findByPk(userId);
+      res.send(user);
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+      });
+    }
+  },
+  async put(req, res) {
+    try {
+      await User.update(req.body, {
+        where: {
+          id: req.user.id,
+        },
+      });
+      res.send(req.body);
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+      });
+    }
+  },
 };
