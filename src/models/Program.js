@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       category: DataTypes.STRING,
       description: DataTypes.TEXT,
       ageLimit: DataTypes.INTEGER,
-      channelId: DataTypes.INTEGER,
     },
   );
   return Program;

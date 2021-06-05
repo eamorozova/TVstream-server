@@ -4,13 +4,9 @@ module.exports = {
   async index(req, res) {
     try {
       const { channelId } = req.query;
-      const { programId } = req.query;
       const where = {};
       if (channelId) {
         where.channelId = channelId;
-        if (programId) {
-          where.id = programId;
-        }
       }
       const programs = await Program.findAll({ where });
       res.send(programs);

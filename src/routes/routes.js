@@ -1,7 +1,6 @@
 const AuthenticationController = require('../controllers/AuthenticationController');
 const ChannelsController = require('../controllers/ChannelsController');
 const ProgramsController = require('../controllers/ProgramsController');
-const StreamsController = require('../controllers/StreamsController');
 const FavoriteChannelController = require('../controllers/FavoriteChannelController');
 
 const AuthenticationPolicy = require('../policies/AuthenticationPolicy');
@@ -61,18 +60,6 @@ module.exports = (app) => {
   app.get(
     '/programs',
     ProgramsController.index,
-  );
-  app.get(
-    '/programs/find',
-    ProgramsController.find,
-  );
-  app.post(
-    '/streams',
-    StreamsController.post,
-  );
-  app.get(
-    '/streams',
-    StreamsController.index,
   );
 
   app.get(
