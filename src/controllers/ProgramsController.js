@@ -50,7 +50,6 @@ module.exports = {
       });
       res.send(req.body);
     } catch (err) {
-      console.log(err);
       res.status(500).send({
         error: 'Error',
       });

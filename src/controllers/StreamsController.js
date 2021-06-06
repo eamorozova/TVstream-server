@@ -8,24 +8,29 @@ module.exports = {
   async find(req, res) {
     try {
       const where = {};
-      let model;
+      let include = {};
       if (req.query.channelId) {
         const { channelId } = req.query;
         where.ChannelId = Number(channelId);
-        model = Program;
+        include = [{ model: Program }];
       }
       if (req.query.programId) {
         const { programId } = req.query;
         where.ProgramId = Number(programId);
-        model = Channel;
+        include = [{ model: Channel }];
       }
+      if (req.query.time) {
+        where.time = req.query.time;
+        include = [{ model: Program }, { model: Channel }];
+      }
+
       const programs = await Stream.findAll({
         order: [
           ['time', 'ASC'],
         ],
         limit: 20,
         where,
-        include: [{ model }],
+        include,
       });
       res.send(programs);
     } catch (err) {
@@ -37,9 +42,7 @@ module.exports = {
   // eslint-disable-next-line consistent-return
   async post(req, res) {
     try {
-      const { channelId } = req.body;
-      const { programId } = req.body;
-      const { time } = req.body;
+      const { channelId, programId, time } = req.body;
       const newStream = await Stream.create({
         time,
         ProgramId: programId,
@@ -47,7 +50,6 @@ module.exports = {
       });
       res.send(newStream);
     } catch (err) {
-      console.log(err);
       res.status(500).send({
         error: 'Error',
       });
@@ -55,8 +57,7 @@ module.exports = {
   },
   async remove(req, res) {
     try {
-      const { channelId } = req.body;
-      const { programId } = req.body;
+      const { channelId, programId } = req.body;
       await Stream.destroy({
         where: {
           ChannelId: channelId,
@@ -66,7 +67,6 @@ module.exports = {
       });
       res.send(req.body);
     } catch (err) {
-      console.log(err);
       res.status(500).send({
         error: 'Error',
       });

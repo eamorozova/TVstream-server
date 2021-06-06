@@ -5,6 +5,7 @@ const ProgramsController = require('../controllers/ProgramsController');
 const StreamsController = require('../controllers/StreamsController');
 const AuthenticationPolicy = require('../policies/AuthenticationPolicy');
 const isAuthenticated = require('../policies/isAuthenticated');
+const isAdmin = require('../policies/isAdmin');
 
 module.exports = (app) => {
   app.post(
@@ -34,6 +35,8 @@ module.exports = (app) => {
 
   app.delete(
     '/channels/:channelId',
+    isAuthenticated,
+    isAdmin,
     ChannelsController.delete,
   );
   app.get(
@@ -46,15 +49,21 @@ module.exports = (app) => {
   );
   app.post(
     '/channels',
+    isAuthenticated,
+    isAdmin,
     ChannelsController.post,
   );
   app.put(
     '/channels/:channelId',
+    isAuthenticated,
+    isAdmin,
     ChannelsController.put,
   );
 
   app.post(
     '/programs',
+    isAuthenticated,
+    isAdmin,
     ProgramsController.post,
   );
   app.get(
@@ -67,10 +76,14 @@ module.exports = (app) => {
   );
   app.put(
     '/programs/:programId',
+    isAuthenticated,
+    isAdmin,
     ProgramsController.put,
   );
   app.delete(
     '/programs/:programId',
+    isAuthenticated,
+    isAdmin,
     ProgramsController.delete,
   );
 
@@ -96,10 +109,14 @@ module.exports = (app) => {
   );
   app.post(
     '/streams',
+    isAuthenticated,
+    isAdmin,
     StreamsController.post,
   );
   app.delete(
     '/streams',
+    isAuthenticated,
+    isAdmin,
     StreamsController.remove,
   );
 };
