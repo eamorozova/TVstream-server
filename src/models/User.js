@@ -1,18 +1,4 @@
-const Promise = require('bluebird');
-
-const bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
-
-// eslint-disable-next-line consistent-return
-function hashPassword(user) {
-  if (user.changed('password')) {
-    return bcrypt
-      .genSaltAsync(8)
-      .then((salt) => bcrypt.hashAsync(user.password, salt, null))
-      .then((hash) => {
-        user.setDataValue('password', hash);
-      });
-  }
-}
+const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -27,14 +13,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeCreate: hashPassword,
-        beforeUpdate: hashPassword,
+        beforeCreate(user) {
+          // eslint-disable-next-line no-param-reassign
+          user.password = bcrypt
+            .hashSync(user.password, bcrypt.genSaltSync(10), null);
+        },
+        beforeBulkUpdate(user) {
+          // eslint-disable-next-line no-param-reassign
+          user.attributes.password = bcrypt
+            .hashSync(user.attributes.password, bcrypt.genSaltSync(10), null);
+        },
       },
     },
   );
 
-  User.prototype.comparePassword = function comparePassword(password) {
-    return bcrypt.compareAsync(password, this.password);
+  User.prototype.comparePassword = function (password) {
+    return bcrypt.compare(password, this.password);
   };
 
   return User;
