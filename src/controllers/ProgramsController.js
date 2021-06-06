@@ -20,6 +20,16 @@ module.exports = {
   },
   async post(req, res) {
     try {
+      const exist = await Program.findOne({
+        where: {
+          title: req.body.title,
+        },
+      });
+      if (exist) {
+        return res.status(400).send({
+          error: 'Передача с таким названием уже существует',
+        });
+      }
       const program = await Program.create(req.body);
       return res.send(program);
     } catch (err) {

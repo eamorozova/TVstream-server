@@ -42,6 +42,16 @@ module.exports = {
   },
   async post(req, res) {
     try {
+      const exist = await Channel.findOne({
+        where: {
+          title: req.body.title,
+        },
+      });
+      if (exist) {
+        return res.status(400).send({
+          error: 'Канал с таким названием уже существует',
+        });
+      }
       const channel = await Channel.create(req.body);
       return res.send(channel);
     } catch (err) {

@@ -43,6 +43,17 @@ module.exports = {
   async post(req, res) {
     try {
       const { channelId, programId, time } = req.body;
+      const exist = await Stream.findOne({
+        where: {
+          ChannelId: channelId,
+          time,
+        },
+      });
+      if (exist) {
+        return res.status(400).send({
+          error: 'Данное время в сетке передач уже занято',
+        });
+      }
       const newStream = await Stream.create({
         time,
         ProgramId: programId,

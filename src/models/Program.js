@@ -1,7 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Program = sequelize.define(
     'Program', {
-      title: DataTypes.STRING,
+      title: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
       category: DataTypes.STRING,
       description: DataTypes.TEXT,
       ageLimit: DataTypes.INTEGER,
