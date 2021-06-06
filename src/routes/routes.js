@@ -1,8 +1,8 @@
 const AuthenticationController = require('../controllers/AuthenticationController');
 const ChannelsController = require('../controllers/ChannelsController');
-const ProgramsController = require('../controllers/ProgramsController');
 const FavoriteChannelController = require('../controllers/FavoriteChannelController');
-
+const ProgramsController = require('../controllers/ProgramsController');
+const StreamsController = require('../controllers/StreamsController');
 const AuthenticationPolicy = require('../policies/AuthenticationPolicy');
 const isAuthenticated = require('../policies/isAuthenticated');
 
@@ -76,5 +76,14 @@ module.exports = (app) => {
     '/favorites/:favoriteId',
     isAuthenticated,
     FavoriteChannelController.remove,
+  );
+
+  app.get(
+    '/streams',
+    StreamsController.find,
+  );
+  app.post(
+    '/streams',
+    StreamsController.post,
   );
 };

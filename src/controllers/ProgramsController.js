@@ -26,4 +26,19 @@ module.exports = {
       });
     }
   },
+  async delete(req, res) {
+    try {
+      await Program.destroy({
+        where: {
+          id: req.params.programId,
+        },
+        force: true,
+      });
+      res.send(req.body);
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+      });
+    }
+  },
 };

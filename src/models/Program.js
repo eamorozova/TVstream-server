@@ -6,6 +6,14 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.TEXT,
       ageLimit: DataTypes.INTEGER,
     },
+    {
+      associate(models) {
+        Program.hasMany(models.FavoriteProgram, {
+          onDelete: 'cascade',
+          hooks: true,
+        });
+      },
+    },
   );
   return Program;
 };
