@@ -1,4 +1,6 @@
 const { Program } = require('../models');
+const { FavoriteProgram } = require('../models');
+const { Stream } = require('../models');
 
 module.exports = {
   async index(req, res) {
@@ -28,11 +30,48 @@ module.exports = {
   },
   async delete(req, res) {
     try {
+      await FavoriteProgram.destroy({
+        where: {
+          ProgramId: req.params.programId,
+        },
+        force: true,
+      });
+      await Stream.destroy({
+        where: {
+          ProgramId: req.params.programId,
+        },
+        force: true,
+      });
       await Program.destroy({
         where: {
           id: req.params.programId,
         },
         force: true,
+      });
+      res.send(req.body);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        error: 'Error',
+      });
+    }
+  },
+  async show(req, res) {
+    try {
+      const program = await Program.findByPk(req.params.programId);
+      res.send(program);
+    } catch (err) {
+      res.status(500).send({
+        error: 'Error',
+      });
+    }
+  },
+  async put(req, res) {
+    try {
+      await Program.update(req.body, {
+        where: {
+          id: req.params.programlId,
+        },
       });
       res.send(req.body);
     } catch (err) {

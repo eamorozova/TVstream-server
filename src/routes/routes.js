@@ -61,6 +61,18 @@ module.exports = (app) => {
     '/programs',
     ProgramsController.index,
   );
+  app.get(
+    '/programs/:programId',
+    ProgramsController.show,
+  );
+  app.put(
+    '/programs/:programId',
+    ProgramsController.put,
+  );
+  app.delete(
+    '/programs/:programId',
+    ProgramsController.delete,
+  );
 
   app.get(
     '/favorites',
@@ -85,5 +97,9 @@ module.exports = (app) => {
   app.post(
     '/streams',
     StreamsController.post,
+  );
+  app.delete(
+    '/streams',
+    StreamsController.remove,
   );
 };

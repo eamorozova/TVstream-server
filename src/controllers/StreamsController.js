@@ -20,6 +20,10 @@ module.exports = {
         model = Channel;
       }
       const programs = await Stream.findAll({
+        order: [
+          ['time', 'ASC'],
+        ],
+        limit: 20,
         where,
         include: [{ model }],
       });
@@ -35,23 +39,34 @@ module.exports = {
     try {
       const { channelId } = req.body;
       const { programId } = req.body;
-      const stream = await Stream.findOne({
-        where: {
-          ProgramId: programId,
-          ChannelId: channelId,
-        },
-      });
-      if (stream) {
-        return res.status(400).send({
-          error: 'Is already streaming',
-        });
-      }
+      const { time } = req.body;
       const newStream = await Stream.create({
+        time,
         ProgramId: programId,
         ChannelId: channelId,
       });
       res.send(newStream);
     } catch (err) {
+      console.log(err);
+      res.status(500).send({
+        error: 'Error',
+      });
+    }
+  },
+  async remove(req, res) {
+    try {
+      const { channelId } = req.body;
+      const { programId } = req.body;
+      await Stream.destroy({
+        where: {
+          ChannelId: channelId,
+          ProgramId: programId,
+        },
+        force: true,
+      });
+      res.send(req.body);
+    } catch (err) {
+      console.log(err);
       res.status(500).send({
         error: 'Error',
       });

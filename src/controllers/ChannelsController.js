@@ -1,11 +1,18 @@
 const { Channel } = require('../models');
 const { FavoriteChannel } = require('../models');
+const { Stream } = require('../models');
 
 module.exports = {
   async delete(req, res) {
     try {
       await FavoriteChannel.destroy({
         where: { ChannelId: req.params.channelId },
+        force: true,
+      });
+      await Stream.destroy({
+        where: {
+          ChannelId: req.params.channelId,
+        },
         force: true,
       });
       await Channel.destroy({
