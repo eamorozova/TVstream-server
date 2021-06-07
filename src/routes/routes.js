@@ -130,7 +130,7 @@ module.exports = (app) => {
     StreamsController.post,
   );
   app.delete(
-    '/streams',
+    '/streams/:streamId',
     isAuthenticated,
     isAdmin,
     StreamsController.remove,
