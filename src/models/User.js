@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
             .hashSync(user.password, bcrypt.genSaltSync(10), null);
         },
         beforeBulkUpdate(user) {
+          if (!user.attributes.password) {
+            return;
+          }
           // eslint-disable-next-line no-param-reassign
           user.attributes.password = bcrypt
             .hashSync(user.attributes.password, bcrypt.genSaltSync(10), null);
