@@ -68,11 +68,10 @@ module.exports = {
   },
   async remove(req, res) {
     try {
-      const { channelId, programId } = req.body;
+      const { streamId } = req.body;
       await Stream.destroy({
         where: {
-          ChannelId: channelId,
-          ProgramId: programId,
+          id: streamId,
         },
         force: true,
       });
