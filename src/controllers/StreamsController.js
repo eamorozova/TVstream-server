@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const {
   Channel,
   Program,
@@ -12,15 +13,17 @@ module.exports = {
       if (req.query.channelId) {
         const { channelId } = req.query;
         where.ChannelId = Number(channelId);
+        where.time = { [Op.gte]: new Date() };
         include = [{ model: Program }];
       }
       if (req.query.programId) {
         const { programId } = req.query;
         where.ProgramId = Number(programId);
+        where.time = { [Op.gte]: new Date() };
         include = [{ model: Channel }];
       }
       if (req.query.time) {
-        where.time = req.query.time;
+        where.time = { [Op.gte]: req.query.time };
         include = [{ model: Program }, { model: Channel }];
       }
 
