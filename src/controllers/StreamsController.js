@@ -5,6 +5,18 @@ const {
   Stream,
 } = require('../models');
 
+const today = () => {
+  const now = new Date();
+  now.setTime(now.getTime() + 3 * 60 * 60 * 1000);
+  return now;
+};
+const nextDay = (day) => {
+  const next = new Date(day);
+  next.setDate(next.getDate() + 1);
+  next.setHours(3, 0, 0, 0);
+  return next;
+};
+
 module.exports = {
   async find(req, res) {
     try {
@@ -13,17 +25,20 @@ module.exports = {
       if (req.query.channelId) {
         const { channelId } = req.query;
         where.ChannelId = Number(channelId);
-        where.time = { [Op.gte]: new Date() };
+        where.time = { [Op.gte]: today() };
         include = [{ model: Program }];
       }
       if (req.query.programId) {
         const { programId } = req.query;
         where.ProgramId = Number(programId);
-        where.time = { [Op.gte]: new Date() };
+        where.time = { [Op.gte]: today() };
         include = [{ model: Channel }];
       }
       if (req.query.time) {
-        where.time = { [Op.gte]: req.query.time };
+        where.time = {
+          [Op.gte]: req.query.time,
+          [Op.lt]: nextDay(req.query.time),
+        };
         include = [{ model: Program }, { model: Channel }];
       }
 
