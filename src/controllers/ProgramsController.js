@@ -79,7 +79,7 @@ module.exports = {
     try {
       await Program.update(req.body, {
         where: {
-          id: req.params.programlId,
+          id: req.params.programId,
         },
       });
       res.send(req.body);
